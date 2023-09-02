@@ -2,8 +2,8 @@
   let game;
   let gameView;
 
-  function generatePairs() {
-    let pairsCount = 8;
+  function generatePairs(size) {
+    let pairsCount = size ** 2 / 2;
     let result = [];
     for (let index = 1; index <= pairsCount; index++) {
       result.push(index);
@@ -26,9 +26,52 @@
     return Math.round(Math.random() * (array.length - 1));
   }
 
-  function createPairsGame(container) {
-    game = createGame();
-    let gameField = createGameFiled(game);
+  function createPresetGame(container) {
+
+    function createCardsInput() {
+      let id = "elementCount";
+      let div = document.createElement("div");
+      div.classList.add('form-group');
+      let label = document.createElement("label")
+      label.for = id;
+      label.innerText = "Количество карточек по вертикали/горизонтали";
+      div.append(label);
+      let input = document.createElement("input");
+      input.classList.add('form-control');
+      input.id = id;
+      input.type = 'number'
+      input.required = true;
+      div.append(input);
+      return {block : div,
+          input};
+    }
+
+    function createPresetSubmit(container, input) {
+      let button = document.createElement('button');
+      button.innerText = 'Начать игру';
+      button.classList.add('btn', 'btn-success', 'btn-lg');
+      button.type = 'submit';
+      return button;
+    }
+
+    container.innerHTML = '';
+    let form = document.createElement('form');
+    let preset = createCardsInput();
+    form.append(preset.block);
+    form.append(createPresetSubmit(container, preset.input));
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      createPairsGame(container, parseInt(preset.input.value));
+      return false;
+    });
+    container.append(form);
+  }
+
+  function createPairsGame(container, size = 4) {
+    size = isNaN(size) || size % 2 === 1 || size < 2 || size > 10 ? 4 : size;
+    container.innerHTML = '';
+    game = createGame(size);
+    let gameField = createGameFiled(size);
     let resetButton = createResetButton(container);
     allCards = gameField.cardButtons;
     container.classList.add('game');
@@ -40,9 +83,9 @@
     }
   }
 
-  function createGame() {
+  function createGame(size) {
     return {
-      cards: shuffle(generatePairs()),
+      cards: shuffle(generatePairs(size)),
       openedCardPositions: [],
       selectedCardPositions: [],
       finished: false,
@@ -80,9 +123,10 @@
     }
   }
 
-  function createGameFiled() {
+  function createGameFiled(size) {
     let cardList = document.createElement('ul');
     cardList.classList.add('game__field', 'd-flex', 'flex-wrap');
+    cardList.style.setProperty('--offsets', size - 1);
     let cardButtons = [];
     for (const cardIndex in game.cards) {
       let card = createCard(parseInt(cardIndex));
@@ -119,7 +163,7 @@
       handleCorrectChoice(handle.selected);
     }
     if (game.finished) {
-      gameView.resetButton.classList.toggle('invisible');
+      gameView.resetButton.classList.remove('invisible');
     }
   }
 
@@ -140,11 +184,10 @@
     button.innerText = 'Сыграть ещё раз';
     button.classList.add('invisible', 'btn', 'btn-success', 'btn-lg');
     button.addEventListener('click', function() {
-      container.innerHTML = '';
-      createPairsGame(container);
+      createPresetGame(container);
     })
     return button;
   }
 
-  window.createPairsGame = createPairsGame;
+  window.createPresetGame = createPresetGame;
 })();
