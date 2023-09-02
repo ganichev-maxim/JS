@@ -1,0 +1,46 @@
+.container {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.game__field {
+  --offsets: 3;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.game__card {
+  position: relative;
+  width: calc(100% / (var(--offsets) + 1));
+  list-style: none;
+  border: 1px solid black;
+  font-size: 30px;
+  aspect-ratio: 1/1;
+  text-align: center;
+}
+
+.game__card-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border: none;
+  font-size: 40px;
+}
+
+.game__card-button_correct {
+  color: green;
+}
