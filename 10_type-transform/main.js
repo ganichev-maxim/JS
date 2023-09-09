@@ -119,7 +119,7 @@
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    console.log(sortStudents(studentsList,'lastName', true));
+
     studentListContainer = this.document.getElementById('students-list');
 
     simpleRenderStudentTable(studentsList);
