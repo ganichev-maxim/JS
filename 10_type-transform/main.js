@@ -87,7 +87,7 @@
     let studentsForView = prepareForRender(studentsArray);
     if (filters) {
       for (const filter of filters) {
-        studentsForView = filterStudents(studentsForView, filter.prop, filter.value);
+        studentsForView = filterStudents(studentsForView, filter.prop, filter.value, filter.method);
       }
     }
     if (sortProperty) {
@@ -102,10 +102,16 @@
     })
   }
 
-  function filterStudents(studentsArray, prop, value) {
+  function filterStudents(studentsArray, prop, value, method) {
     let result = [];
     for (const student of studentsArray) {
-      if (String(student[prop]).includes(value)) {
+      let condition = String(student[prop]).includes(value);
+      if (method) {
+        if (method === 'strict') {
+          condition = String(student[prop]) === value;
+        }
+      }
+      if (condition) {
         result.push(student);
       }
     }
@@ -238,14 +244,13 @@
       }
 
       if (document.getElementById('studentAdmissionYearFilter').value) {
-        filters.push({prop: 'admissionYear', value: document.getElementById('studentAdmissionYearFilter').value});
+        filters.push({prop: 'admissionYear', value: document.getElementById('studentAdmissionYearFilter').value, method: 'strict'});
       }
 
       if (document.getElementById('studentGraduationYearFilter').value) {
-        filters.push({prop: 'graduateYear', value: document.getElementById('studentGraduationYearFilter').value});
+        filters.push({prop: 'graduateYear', value: document.getElementById('studentGraduationYearFilter').value, method: 'strict'});
       }
       filteredAndSortedRenderStudentTable(studentsList);
     });
   }, false);
-  window.sortStudents = sortStudents;
 })();
