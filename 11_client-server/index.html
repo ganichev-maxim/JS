@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов</title>
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <main>
+        <section class="students">
+            <div class="container">
+                <h1>Список студентов</h1>
+                <form id="students__add-form" class="students__add-form mb-3 needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="studentName">Имя</label>
+                            <input class="form-control" id="studentName" placeholder="Имя" required>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="studentLastName">Фамилия</label>
+                            <input class="form-control" id="studentLastName" placeholder="Фамилия" required>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="studentMiddleName">Отчество</label>
+                            <input class="form-control" id="studentMiddleName" placeholder="Отчество" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            <label for="studentBirthDay">Дата рождения</label>
+                            <input type="date" class="form-control" id="studentBirthDay" placeholder="Дата рождения" required>
+                        </div>
+
+                        <div class="form-group col-2">
+                            <label for="studentAdmissionYear">Год начала обучения</label>
+                            <input type="number" class="form-control" id="studentAdmissionYear" placeholder="Год начала обучения" pattern="\d+" required>
+                        </div>
+
+                        <div class="form-group col-8">
+                            <label for="studentFaculty">Факультет</label>
+                            <input class="form-control" id="studentFaculty" placeholder="Факультет" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-4">
+                        <button id="students__add" type="submit" class="students__add btn btn-primary">Добавить</button>
+                        <div id="validationResults" class="invalid-tooltip">
+
+                        </div>
+                      </div>
+                    </div>
+                </form>
+
+                <form id="filterForm">
+                    <div class="form-row">
+                        <div class="form-group col-11">
+                            <input class="form-control" id="studentFilter" placeholder="Найти">
+                        </div>
+
+                        <div class="form-group col-1">
+                            <button type="submit" class="btn btn-primary" id="filterSubmit">Искать</button>
+                        </div>
+
+                    </div>
+                </form>
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col" id="tableFullName">Ф. И. О</th>
+                        <th scope="col" id="tableFaculty">Факультет</th>
+                        <th scope="col" id="tableBirthDate">Дата рождения и возраст</th>
+                        <th scope="col" id="tableLearnPeriod">Годы обучения</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id = "students-list" class="students__list">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
